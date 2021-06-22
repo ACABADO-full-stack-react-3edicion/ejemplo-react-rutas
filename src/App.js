@@ -1,24 +1,42 @@
-import logo from './logo.svg';
-import './App.css';
+import {
+  Route,
+  Switch,
+  BrowserRouter as Router,
+  Redirect,
+} from "react-router-dom";
+import { Cabecera } from "./componentes/Cabecera";
+import { PaginaFormulario } from "./paginas/PaginaFormulario";
+import { PaginaListado } from "./paginas/PaginaListado";
+import { PaginaNotFound } from "./paginas/PaginaNotFound";
+import { PaginaPrincipal } from "./paginas/PaginaPrincipal";
 
 function App() {
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
+    <>
+      <Router>
+        <Cabecera />
+        <Switch>
+          <Route path="/principal" exact>
+            <PaginaPrincipal />
+          </Route>
+          <Route path="/facturas" exact>
+            <PaginaListado />
+          </Route>
+          <Route path="/nueva-factura" exact>
+            <PaginaFormulario />
+          </Route>
+          <Route path="/editar-factura/:idFactura" exact>
+            <PaginaFormulario />
+          </Route>
+          <Route path="/" exact>
+            <Redirect to="/principal" />
+          </Route>
+          <Route path="**" exact>
+            <PaginaNotFound />
+          </Route>
+        </Switch>
+      </Router>
+    </>
   );
 }
 
